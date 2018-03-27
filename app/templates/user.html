@@ -22,12 +22,6 @@
 	<hr>
 	{% for post in posts %}
 		{% include '_post.html' %}
-	<table>
-		<tr valign="top">
-			<td><img src="{{ post.author.avatar(36) }}"></td>
-			<td>{{ post.author.username }} sanoi : <b> {{ post.body }} </td>
-		</tr>
-	</table>
 	{% endfor %}
 	{% if prev_url %}
 	<a href="{{ prev_url }}">Newer posts</a>
@@ -35,6 +29,4 @@
 	{% if next_url %}
 	<a href="{{ next_url }}">Older posts</a>
 	{% endif %}
-
-
 {% endblock %}
