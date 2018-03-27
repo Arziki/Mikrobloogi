@@ -33,52 +33,63 @@ from app.forms import EditProfileForm  # Linking edit profile related additions
 def index():
 	form = PostForm()
 	if form.validate_on_submit():
-        post = Post(body=form.post.data, author=current_user)
-        db.session.add(post)
-        db.session.commit()
-        flash('Your post is now live!')
-        return redirect(url_for('index'))
+		post = Post(body=form.post.data, author=current_user)
+		db.session.add(post)
+		db.session.commit()
+		flash('Your post is now live!')
+		return redirect(url_for('index'))
+	page = request.args.get('page', 1, type=int)
+	posts = current_user.followed_posts().paginate(
+		page, app.config['POSTS_PER_PAGE'], False)
+	next_url = url_for('index', page=posts.next_num) \
+		if posts.has_next else None
+	prev_url = url_for('index', page=posts.prev_num) \
+		if posts.has_prev else None
+	# posts = [
+	# {
+	# 		'author': {'username' : 'John'},
+	# 		'body' : 'Seitseman Veljesta'
+	# },
+	# {
+	# 		'author': {'username' : 'Susan'},
+	# 		'body' : 'An Ear to the Ground'
+	# },
+	# {
+	# 		'author': {'username' : 'Mummu'},
+	# 		'body' : 'Beleive This, Beleive Anything'
+	# },
+	# {
+	# 		'author': {'username' : 'Wiljami'},
+	# 		'body' : 'Eyes Wide Shot'
+	# },
+	# {
+	# 		'author': {'username' : ' Aaroni'},
+	# 		'body' : 'I will Bury My Dead'
+	# },
+	# {
+	# 		'author': {'username' : 'Juju'},
+	# 		'body' : 'Koffin from Hongkon'
+	# },
+	# {
+	# 		'author' : {'username' : 'Santtu'},
+	# 		'body' : 'Grand Theft Auto !' 
+	# }
+
+	# ]
+	
+	return render_template('index.html', title='Home Page', form=form, posts=posts.items, next_url=next_url, prev_url=prev_url)
+
+@app.route('/explore')
+@login_required
+def explore():
     page = request.args.get('page', 1, type=int)
-    posts = current_user.followed_posts().paginate(
+    posts = Post.query.order_by(Post.timestamp.desc()).paginate(
         page, app.config['POSTS_PER_PAGE'], False)
     next_url = url_for('index', page=posts.next_num) \
         if posts.has_next else None
     prev_url = url_for('index', page=posts.prev_num) \
         if posts.has_prev else None
-	posts = [
-	{
-			'author': {'username' : 'Mauri'},
-			'body' : 'Seitseman Veljesta'
-	},
-	{
-			'author': {'username' : 'Iitu'},
-			'body' : 'An Ear to the Ground'
-	},
-	{
-			'author': {'username' : 'Mummu'},
-			'body' : 'Beleive This, Beleive Anything'
-	},
-	{
-			'author': {'username' : 'Wiljami'},
-			'body' : 'Eyes Wide Shot'
-	},
-	{
-			'author': {'username' : ' Aaroni'},
-			'body' : 'I will Bury My Dead'
-	},
-	{
-			'author': {'username' : 'Juju'},
-			'body' : 'Koffin from Hongkon'
-	},
-	{
-			'author' : {'username' : 'Santtu'},
-			'body' : 'Grand Theft Auto !' 
-	}
-
-	]
-	
-	return render_template('index.html', title='Home Page', form=form,
-	 posts = posts.items, next_url=next_url, prev_url=prev_url)
+    return render_template("index.html", title='Explore', posts=posts.items, next_url=next_url, prev_url=prev_url)
 
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -125,13 +136,13 @@ def register():
 def user(username):
 	user = User.query.filter_by(username=username).first_or_404()
 	page = request.args.get('page', 1, type=int)
-    posts = Post.query.order_by(Post.timestamp.desc()).paginate(
-        page, app.config['POSTS_PER_PAGE'], False)
-    next_url = url_for('index', page=posts.next_num) \
-        if posts.has_next else None
-    prev_url = url_for('index', page=posts.prev_num) \
-        if posts.has_prev else None
-    return render_template('user.html', user=user, posts=posts.items, next_url=next_url, prev_url=prev_url)
+	posts = Post.query.order_by(Post.timestamp.desc()).paginate(
+		page, app.config['POSTS_PER_PAGE'], False)
+	next_url = url_for('index', page=posts.next_num) \
+		if posts.has_next else None
+	prev_url = url_for('index', page=posts.prev_num) \
+		if posts.has_prev else None
+	return render_template('user.html', user=user, posts=posts.items, next_url=next_url, prev_url=prev_url)
 	# posts = [
 	# {'author': user, 'body': 'Test post #1'},
 	# {'author': user, 'body': 'Test post #2'}
@@ -194,14 +205,3 @@ def unfollow(username):
     return redirect(url_for('user', username=username))
 
 
-@app.route('/explore')
-@login_required
-def explore():
-    page = request.args.get('page', 1, type=int)
-    posts = Post.query.order_by(Post.timestamp.desc()).paginate(
-        page, app.config['POSTS_PER_PAGE'], False)
-    next_url = url_for('index', page=posts.next_num) \
-        if posts.has_next else None
-    prev_url = url_for('index', page=posts.prev_num) \
-        if posts.has_prev else None
-    return render_template("index.html", title='Explore', posts=posts.items, next_url=next_url, prev_url=prev_url)
