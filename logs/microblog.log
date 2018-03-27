@@ -95,3 +95,4 @@ jinja2.exceptions.TemplateSyntaxError: expected token 'end of statement block', 
 2018-03-28 01:59:17,558 INFO: Microblog startup [in /home/ari/Documents/LastChance/microblog/app/__init__.py: 49]
 2018-03-28 02:05:15,352 INFO: Microblog startup [in /home/ari/Documents/LastChance/microblog/app/__init__.py: 49]
 2018-03-28 02:08:26,284 INFO: Microblog startup [in /home/ari/Documents/LastChance/microblog/app/__init__.py: 49]
+2018-03-28 02:15:23,618 INFO: Microblog startup [in /home/ari/Documents/LastChance/microblog/app/__init__.py: 49]
