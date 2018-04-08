@@ -1,4 +1,4 @@
-2018-03-28 00:10:19,641 ERROR: Exception on /edit_profile [GET] [in /home/ari/Documents/LastChance/microblog/mb_venv/lib/python3.5/site-packages/flask/app.py: 1560]
+2018-04-08 14:13:23,879 ERROR: Exception on /index [GET] [in /home/ari/Documents/LastChance/microblog/mb_venv/lib/python3.5/site-packages/flask/app.py: 1560]
 Traceback (most recent call last):
   File "/home/ari/Documents/LastChance/microblog/mb_venv/lib/python3.5/site-packages/flask/app.py", line 1982, in wsgi_app
     response = self.full_dispatch_request()
@@ -14,36 +14,26 @@ Traceback (most recent call last):
     return self.view_functions[rule.endpoint](**req.view_args)
   File "/home/ari/Documents/LastChance/microblog/mb_venv/lib/python3.5/site-packages/flask_login/utils.py", line 261, in decorated_view
     return func(*args, **kwargs)
-  File "/home/ari/Documents/LastChance/microblog/app/routes.py", line 173, in edit_profile
-    return render_template('edit_profile.html', title='Edit Profile', form=EditProform)
-  File "/home/ari/Documents/LastChance/microblog/mb_venv/lib/python3.5/site-packages/flask/templating.py", line 133, in render_template
-    return _render(ctx.app.jinja_env.get_or_select_template(template_name_or_list),
-  File "/home/ari/Documents/LastChance/microblog/mb_venv/lib/python3.5/site-packages/jinja2/environment.py", line 869, in get_or_select_template
-    return self.get_template(template_name_or_list, parent, globals)
-  File "/home/ari/Documents/LastChance/microblog/mb_venv/lib/python3.5/site-packages/jinja2/environment.py", line 830, in get_template
-    return self._load_template(name, self.make_globals(globals))
-  File "/home/ari/Documents/LastChance/microblog/mb_venv/lib/python3.5/site-packages/jinja2/environment.py", line 804, in _load_template
-    template = self.loader.load(self, name, globals)
-  File "/home/ari/Documents/LastChance/microblog/mb_venv/lib/python3.5/site-packages/jinja2/loaders.py", line 125, in load
-    code = environment.compile(source, name, filename)
-  File "/home/ari/Documents/LastChance/microblog/mb_venv/lib/python3.5/site-packages/jinja2/environment.py", line 591, in compile
-    self.handle_exception(exc_info, source_hint=source_hint)
+  File "/home/ari/Documents/LastChance/microblog/app/routes.py", line 80, in index
+    return render_template('index.html', title='Home Page', form=form, posts=posts.items, next_url=next_url, prev_url=prev_url)
+  File "/home/ari/Documents/LastChance/microblog/mb_venv/lib/python3.5/site-packages/flask/templating.py", line 134, in render_template
+    context, ctx.app)
+  File "/home/ari/Documents/LastChance/microblog/mb_venv/lib/python3.5/site-packages/flask/templating.py", line 116, in _render
+    rv = template.render(context)
+  File "/home/ari/Documents/LastChance/microblog/mb_venv/lib/python3.5/site-packages/jinja2/environment.py", line 1008, in render
+    return self.environment.handle_exception(exc_info, True)
   File "/home/ari/Documents/LastChance/microblog/mb_venv/lib/python3.5/site-packages/jinja2/environment.py", line 780, in handle_exception
     reraise(exc_type, exc_value, tb)
   File "/home/ari/Documents/LastChance/microblog/mb_venv/lib/python3.5/site-packages/jinja2/_compat.py", line 37, in reraise
     raise value.with_traceback(tb)
-  File "/home/ari/Documents/LastChance/microblog/app/templates/edit_profile.html", line 23, in template
-    {% endblock %sub
-  File "/home/ari/Documents/LastChance/microblog/mb_venv/lib/python3.5/site-packages/jinja2/environment.py", line 497, in _parse
-    return Parser(self, source, name, encode_filename(filename)).parse()
-  File "/home/ari/Documents/LastChance/microblog/mb_venv/lib/python3.5/site-packages/jinja2/parser.py", line 901, in parse
-    result = nodes.Template(self.subparse(), lineno=1)
-  File "/home/ari/Documents/LastChance/microblog/mb_venv/lib/python3.5/site-packages/jinja2/parser.py", line 888, in subparse
-    self.stream.expect('block_end')
-  File "/home/ari/Documents/LastChance/microblog/mb_venv/lib/python3.5/site-packages/jinja2/lexer.py", line 384, in expect
-    self.name, self.filename)
-jinja2.exceptions.TemplateSyntaxError: expected token 'end of statement block', got '%'
-2018-03-28 00:10:46,346 ERROR: Exception on /edit_profile [GET] [in /home/ari/Documents/LastChance/microblog/mb_venv/lib/python3.5/site-packages/flask/app.py: 1560]
+  File "/home/ari/Documents/LastChance/microblog/app/templates/index.html", line 2, in top-level template code
+    {% import 'bootstrap/wtf.html' as wtf %}
+  File "/home/ari/Documents/LastChance/microblog/mb_venv/lib/python3.5/site-packages/flask/templating.py", line 57, in get_source
+    return self._get_source_fast(environment, template)
+  File "/home/ari/Documents/LastChance/microblog/mb_venv/lib/python3.5/site-packages/flask/templating.py", line 85, in _get_source_fast
+    raise TemplateNotFound(template)
+jinja2.exceptions.TemplateNotFound: bootstrap/wtf.html
+2018-04-08 14:13:24,955 ERROR: Exception on /index [GET] [in /home/ari/Documents/LastChance/microblog/mb_venv/lib/python3.5/site-packages/flask/app.py: 1560]
 Traceback (most recent call last):
   File "/home/ari/Documents/LastChance/microblog/mb_venv/lib/python3.5/site-packages/flask/app.py", line 1982, in wsgi_app
     response = self.full_dispatch_request()
@@ -59,40 +49,58 @@ Traceback (most recent call last):
     return self.view_functions[rule.endpoint](**req.view_args)
   File "/home/ari/Documents/LastChance/microblog/mb_venv/lib/python3.5/site-packages/flask_login/utils.py", line 261, in decorated_view
     return func(*args, **kwargs)
-  File "/home/ari/Documents/LastChance/microblog/app/routes.py", line 173, in edit_profile
-    return render_template('edit_profile.html', title='Edit Profile', form=EditProform)
-  File "/home/ari/Documents/LastChance/microblog/mb_venv/lib/python3.5/site-packages/flask/templating.py", line 133, in render_template
-    return _render(ctx.app.jinja_env.get_or_select_template(template_name_or_list),
-  File "/home/ari/Documents/LastChance/microblog/mb_venv/lib/python3.5/site-packages/jinja2/environment.py", line 869, in get_or_select_template
-    return self.get_template(template_name_or_list, parent, globals)
-  File "/home/ari/Documents/LastChance/microblog/mb_venv/lib/python3.5/site-packages/jinja2/environment.py", line 830, in get_template
-    return self._load_template(name, self.make_globals(globals))
-  File "/home/ari/Documents/LastChance/microblog/mb_venv/lib/python3.5/site-packages/jinja2/environment.py", line 804, in _load_template
-    template = self.loader.load(self, name, globals)
-  File "/home/ari/Documents/LastChance/microblog/mb_venv/lib/python3.5/site-packages/jinja2/loaders.py", line 125, in load
-    code = environment.compile(source, name, filename)
-  File "/home/ari/Documents/LastChance/microblog/mb_venv/lib/python3.5/site-packages/jinja2/environment.py", line 591, in compile
-    self.handle_exception(exc_info, source_hint=source_hint)
+  File "/home/ari/Documents/LastChance/microblog/app/routes.py", line 80, in index
+    return render_template('index.html', title='Home Page', form=form, posts=posts.items, next_url=next_url, prev_url=prev_url)
+  File "/home/ari/Documents/LastChance/microblog/mb_venv/lib/python3.5/site-packages/flask/templating.py", line 134, in render_template
+    context, ctx.app)
+  File "/home/ari/Documents/LastChance/microblog/mb_venv/lib/python3.5/site-packages/flask/templating.py", line 116, in _render
+    rv = template.render(context)
+  File "/home/ari/Documents/LastChance/microblog/mb_venv/lib/python3.5/site-packages/jinja2/environment.py", line 1008, in render
+    return self.environment.handle_exception(exc_info, True)
   File "/home/ari/Documents/LastChance/microblog/mb_venv/lib/python3.5/site-packages/jinja2/environment.py", line 780, in handle_exception
     reraise(exc_type, exc_value, tb)
   File "/home/ari/Documents/LastChance/microblog/mb_venv/lib/python3.5/site-packages/jinja2/_compat.py", line 37, in reraise
     raise value.with_traceback(tb)
-  File "/home/ari/Documents/LastChance/microblog/app/templates/edit_profile.html", line 23, in template
-    {% endblock %sub
-  File "/home/ari/Documents/LastChance/microblog/mb_venv/lib/python3.5/site-packages/jinja2/environment.py", line 497, in _parse
-    return Parser(self, source, name, encode_filename(filename)).parse()
-  File "/home/ari/Documents/LastChance/microblog/mb_venv/lib/python3.5/site-packages/jinja2/parser.py", line 901, in parse
-    result = nodes.Template(self.subparse(), lineno=1)
-  File "/home/ari/Documents/LastChance/microblog/mb_venv/lib/python3.5/site-packages/jinja2/parser.py", line 888, in subparse
-    self.stream.expect('block_end')
-  File "/home/ari/Documents/LastChance/microblog/mb_venv/lib/python3.5/site-packages/jinja2/lexer.py", line 384, in expect
-    self.name, self.filename)
-jinja2.exceptions.TemplateSyntaxError: expected token 'end of statement block', got '%'
-2018-03-28 00:15:22,870 INFO: Microblog startup [in /home/ari/Documents/LastChance/microblog/app/__init__.py: 49]
-2018-03-28 00:36:02,960 INFO: Microblog startup [in /home/ari/Documents/LastChance/microblog/app/__init__.py: 49]
-2018-03-28 00:46:07,579 INFO: Microblog startup [in /home/ari/Documents/LastChance/microblog/app/__init__.py: 49]
-2018-03-28 01:03:13,760 INFO: Microblog startup [in /home/ari/Documents/LastChance/microblog/app/__init__.py: 49]
-2018-03-28 01:59:17,558 INFO: Microblog startup [in /home/ari/Documents/LastChance/microblog/app/__init__.py: 49]
-2018-03-28 02:05:15,352 INFO: Microblog startup [in /home/ari/Documents/LastChance/microblog/app/__init__.py: 49]
-2018-03-28 02:08:26,284 INFO: Microblog startup [in /home/ari/Documents/LastChance/microblog/app/__init__.py: 49]
-2018-03-28 02:15:23,618 INFO: Microblog startup [in /home/ari/Documents/LastChance/microblog/app/__init__.py: 49]
+  File "/home/ari/Documents/LastChance/microblog/app/templates/index.html", line 2, in top-level template code
+    {% import 'bootstrap/wtf.html' as wtf %}
+  File "/home/ari/Documents/LastChance/microblog/mb_venv/lib/python3.5/site-packages/flask/templating.py", line 57, in get_source
+    return self._get_source_fast(environment, template)
+  File "/home/ari/Documents/LastChance/microblog/mb_venv/lib/python3.5/site-packages/flask/templating.py", line 85, in _get_source_fast
+    raise TemplateNotFound(template)
+jinja2.exceptions.TemplateNotFound: bootstrap/wtf.html
+2018-04-08 14:13:26,132 ERROR: Exception on /index [GET] [in /home/ari/Documents/LastChance/microblog/mb_venv/lib/python3.5/site-packages/flask/app.py: 1560]
+Traceback (most recent call last):
+  File "/home/ari/Documents/LastChance/microblog/mb_venv/lib/python3.5/site-packages/flask/app.py", line 1982, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/ari/Documents/LastChance/microblog/mb_venv/lib/python3.5/site-packages/flask/app.py", line 1614, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/ari/Documents/LastChance/microblog/mb_venv/lib/python3.5/site-packages/flask/app.py", line 1517, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/home/ari/Documents/LastChance/microblog/mb_venv/lib/python3.5/site-packages/flask/_compat.py", line 33, in reraise
+    raise value
+  File "/home/ari/Documents/LastChance/microblog/mb_venv/lib/python3.5/site-packages/flask/app.py", line 1612, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/ari/Documents/LastChance/microblog/mb_venv/lib/python3.5/site-packages/flask/app.py", line 1598, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/home/ari/Documents/LastChance/microblog/mb_venv/lib/python3.5/site-packages/flask_login/utils.py", line 261, in decorated_view
+    return func(*args, **kwargs)
+  File "/home/ari/Documents/LastChance/microblog/app/routes.py", line 80, in index
+    return render_template('index.html', title='Home Page', form=form, posts=posts.items, next_url=next_url, prev_url=prev_url)
+  File "/home/ari/Documents/LastChance/microblog/mb_venv/lib/python3.5/site-packages/flask/templating.py", line 134, in render_template
+    context, ctx.app)
+  File "/home/ari/Documents/LastChance/microblog/mb_venv/lib/python3.5/site-packages/flask/templating.py", line 116, in _render
+    rv = template.render(context)
+  File "/home/ari/Documents/LastChance/microblog/mb_venv/lib/python3.5/site-packages/jinja2/environment.py", line 1008, in render
+    return self.environment.handle_exception(exc_info, True)
+  File "/home/ari/Documents/LastChance/microblog/mb_venv/lib/python3.5/site-packages/jinja2/environment.py", line 780, in handle_exception
+    reraise(exc_type, exc_value, tb)
+  File "/home/ari/Documents/LastChance/microblog/mb_venv/lib/python3.5/site-packages/jinja2/_compat.py", line 37, in reraise
+    raise value.with_traceback(tb)
+  File "/home/ari/Documents/LastChance/microblog/app/templates/index.html", line 2, in top-level template code
+    {% import 'bootstrap/wtf.html' as wtf %}
+  File "/home/ari/Documents/LastChance/microblog/mb_venv/lib/python3.5/site-packages/flask/templating.py", line 57, in get_source
+    return self._get_source_fast(environment, template)
+  File "/home/ari/Documents/LastChance/microblog/mb_venv/lib/python3.5/site-packages/flask/templating.py", line 85, in _get_source_fast
+    raise TemplateNotFound(template)
+jinja2.exceptions.TemplateNotFound: bootstrap/wtf.html
+2018-04-08 14:18:44,775 INFO: Microblog startup [in /home/ari/Documents/LastChance/microblog/app/__init__.py: 51]
