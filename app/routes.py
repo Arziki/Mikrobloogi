@@ -45,37 +45,7 @@ def index():
 		if posts.has_next else None
 	prev_url = url_for('index', page=posts.prev_num) \
 		if posts.has_prev else None
-	# posts = [
-	# {
-	# 		'author': {'username' : 'John'},
-	# 		'body' : 'Seitseman Veljesta'
-	# },
-	# {
-	# 		'author': {'username' : 'Susan'},
-	# 		'body' : 'An Ear to the Ground'
-	# },
-	# {
-	# 		'author': {'username' : 'Mummu'},
-	# 		'body' : 'Beleive This, Beleive Anything'
-	# },
-	# {
-	# 		'author': {'username' : 'Wiljami'},
-	# 		'body' : 'Eyes Wide Shot'
-	# },
-	# {
-	# 		'author': {'username' : ' Aaroni'},
-	# 		'body' : 'I will Bury My Dead'
-	# },
-	# {
-	# 		'author': {'username' : 'Juju'},
-	# 		'body' : 'Koffin from Hongkon'
-	# },
-	# {
-	# 		'author' : {'username' : 'Santtu'},
-	# 		'body' : 'Grand Theft Auto !' 
-	# }
-
-	# ]
+	
 	
 	return render_template('index.html', title='Home Page', form=form, posts=posts.items, next_url=next_url, prev_url=prev_url)
 
@@ -129,6 +99,39 @@ def register():
 		flash('Onneksi Olkoon, olet rekisteroinut uutena käyttäjänä!')
 		return redirect(url_for('login'))
 	return render_template('register.html', title='Register', form=Regform)
+
+@app.route('/reset_password_request', methods=['GET', 'POST'])
+def reset_password_request():
+    if current_user.is_authenticated:
+        return redirect(url_for('index'))
+    form = ResetPasswordRequestForm()
+    if form.validate_on_submit():
+        user = User.query.filter_by(email=form.email.data).first()
+        if user:
+            send_password_reset_email(user)
+        flash('Check your email for the instructions to reset your password')
+        return redirect(url_for('login'))
+    return render_template('reset_password_request.html',
+                           title='Reset Password', form=form)
+
+
+@app.route('/reset_password/<token>', methods=['GET', 'POST'])
+def reset_password(token):
+    if current_user.is_authenticated:
+        return redirect(url_for('index'))
+    user = User.verify_reset_password_token(token)
+    if not user:
+        return redirect(url_for('index'))
+    form = ResetPasswordForm()
+    if form.validate_on_submit():
+        user.set_password(form.password.data)
+        db.session.commit()
+        flash('Your password has been reset.')
+        return redirect(url_for('login'))
+    return render_template('reset_password.html', form=form)
+
+
+
 
 
 @app.route('/user/<username>')
